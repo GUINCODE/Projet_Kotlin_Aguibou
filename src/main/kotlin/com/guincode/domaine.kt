@@ -10,15 +10,17 @@ data class Animal(
     var nom: String,
     var poids: Double,
     var age:Int){
-   // init{
-  //      println("new instance created")
- //   }
+
+    fun detailsAnimal(){
+        println("Nom: $nom, Poids: $poids, Age: $age, Appartient à la categorie $categorie")
+    }
 }
 
 
 
 //singleton pour contenire mes functions qui ne sont pas liées à un objet precis
 object ZooOperation{
+
 
 
     fun showAllAnimaux(listAnimaux: MutableList <Animal>){
@@ -57,12 +59,22 @@ object ZooOperation{
    fun removeAnimal(element: String):String{
        for ((indice,valeur) in listeAnimaux.withIndex())
            if(valeur.nom==element){
-               listeAnimaux.remove(valeur)
+               listeAnimaux.apply {
+                   removeAt(indice)
+               }
                 return "L'animal: [${valeur.nom}] à la position $indice à été rétiré de la liste"
            }
 
        return " aucun animal de la liste ne porte le nom $element "
    }
+
+    fun findAnima(param: String){
+       val elem=   listeAnimaux.find { it.nom==param }
+        if (elem != null) {
+            elem.detailsAnimal()
+        }
+        else println("aucun element trouvé")
+    }
 }
 
 
@@ -82,14 +94,16 @@ var leopard=Animal(CategorieAnimal.CARNIVORE,"leopard",43.0, 5)
 var singe=Animal(CategorieAnimal.HERBIVORE, "singe",3.0, 1)
 var herisson= Animal(CategorieAnimal.INSECTIVORE,"herisson",2.3,2)
 var antilope= Animal(CategorieAnimal.HERBIVORE,"antilope",25.0,4)
+var antilope2= Animal(CategorieAnimal.HERBIVORE,"antilope",25.0,4)
 var anteater= Animal(CategorieAnimal.INSECTIVORE,"anteater",1.0,1)
-var listeAnimaux= arrayListOf(lion,zebre,leopard,singe,antilope,herisson,anteater)
+var listeAnimaux= arrayListOf(lion,zebre,leopard,singe,antilope,herisson,anteater,antilope2)
 
 
 fun menu(){
     println("A :Pour afficher la liste des animaux")
     println("N :Pour ajouter un animal")
-    println("D :Pour suprimer un element")
+    println("D :Pour suprimer un animal")
+    println("R :Pour rechercher un animal")
     println("H :Pour afficher les Herbivores")
     println("C :Pour afficher les Carnivores")
     println("I :Pour afficher les Insectivores")
@@ -105,11 +119,11 @@ fun menu(){
     when(entre[0].uppercaseChar()) {
         'A'-> {
             println("Liste des animaux:")
-            ZooOperation.showAllAnimaux(listeAnimaux);
+            ZooOperation.showAllAnimaux(listeAnimaux)
         }
         'D'->{
             println("entrer le nom de l'animal à supprimé")
-            var nomAnimal= readLine();
+            var nomAnimal= readLine()
             while (nomAnimal=="") {
                 print("Entrer un nom: ")
                 nomAnimal = readLine()
@@ -142,14 +156,15 @@ fun menu(){
             println("1: CARNIVORE")
             println("2: HERBIVORE")
             println("3: INSECTIVORE")
+            println("4: CATEGORIE AUTRE")
             var categorie = readLine()?.toIntOrNull()
-            if (categorie==null) throw ChoixVideException()
+          //  if (categorie==null) throw ChoixVideException()
                 while (categorie !is Int) {
                     println("choix de categorie: ")
                     println("1: CARNIVORE")
                     println("2: HERBIVORE")
                     println("3: INSECTIVORE")
-                    println("AUTRE NUMERO")
+                    println("4: CATEGORIE AUTRE")
 
                     categorie = readLine()?.toIntOrNull()
 
@@ -157,9 +172,9 @@ fun menu(){
                         1 -> choixCategorie=CategorieAnimal.CARNIVORE
                         2 -> choixCategorie=CategorieAnimal.HERBIVORE
                         3 -> choixCategorie=CategorieAnimal.INSECTIVORE
+                        4 -> choixCategorie=CategorieAnimal.AUTRE
                         else -> {
-                            println("Categorie: AUTRE")
-                            choixCategorie=CategorieAnimal.AUTRE
+                            throw ChoixVideException()
                         }
 
                     }
@@ -167,7 +182,9 @@ fun menu(){
 
 
                 }
+
             listeAnimaux.add(listeAnimaux.size, Animal(choixCategorie, nom,poids,age))
+            println("un(e) $nom ajouté")
            try {
                menu()
            } catch (e : ChoixVideException){
@@ -176,6 +193,17 @@ fun menu(){
 
 
 
+        }
+        'R'->{
+            println("Recherche de (nom animal): ")
+
+            var nomA = readLine()
+            while (nomA !is String) {
+                println("Recherche de (nom animal): ")
+                nomA = readLine()
+            }
+
+            ZooOperation.findAnima(nomA)
         }
         'H'-> {
             println("Liste des herbivores: ")
@@ -206,9 +234,9 @@ fun menu(){
             println("categorie Autre ")
             ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.AUTRE) //Affiche les animaux de la categorie AUTRE
             println("------------------------------")
-            myHyghtOrderFunction(antilope,zebre,isMemeCategorie); //verifie si les deux animaux sont de la meme categorie
+            myHyghtOrderFunction(antilope,zebre,isMemeCategorie) //verifie si les deux animaux sont de la meme categorie
             println("------------------------------")
-           myHyghtOrderFunction(antilope,zebre,calclulPoind);  //calcul le poids total des deux animaux
+           myHyghtOrderFunction(antilope,zebre,calclulPoind) //calcul le poids total des deux animaux
         }
     }
 }
