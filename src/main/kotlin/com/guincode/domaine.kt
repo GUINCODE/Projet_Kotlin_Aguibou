@@ -23,6 +23,7 @@ object ZooOperation{
 
     fun showAllAnimaux(listAnimaux: MutableList <Animal>){
         println("------------------------------")
+        println("Liste des animaux")
         // boucle for avec le couple indice et valeur
         for ((indice,valeur) in listAnimaux.withIndex())
             println("${indice+1}) Categorie:${valeur.categorie}, Nom: ${valeur.nom}, Poids: ${valeur.poids} kg, Age: ${valeur.age} ans ")
@@ -36,24 +37,32 @@ object ZooOperation{
 
     }
 
-    fun showAnimalByCategorie(listAnimaux: MutableList <Animal>, order: CategorieAnimal){
+    fun showAnimalByCategorie(listAnimaux: MutableList <Animal>, categorie: CategorieAnimal){
 
         //boucle for avec uniquement la valeur
         var i=0
         for (valeur in listAnimaux)
         //les Conditions avec when
-            when(order){
+            when(categorie){
                 valeur.categorie-> {
                     println("${i+1}) Categorie:${valeur.categorie}, nom: ${valeur.nom}, poids: ${valeur.poids} kg, age: ${valeur.age} ans ")
                     i++
                 }
             }
-        println("Nombre de $order: $i")
+        println("Nombre de $categorie: $i")
         println("------------------------------")
     }
 
 
+   fun removeAnimal(element: String):String{
+       for ((indice,valeur) in listeAnimaux.withIndex())
+           if(valeur.nom==element){
+               listeAnimaux.remove(valeur)
+                return "L'animal: [${valeur.nom}] à la position $indice à été rétiré de la liste"
+           }
 
+       return " aucun animal de la liste ne porte le nom $element "
+   }
 }
 
 
@@ -80,6 +89,7 @@ var listeAnimaux= arrayListOf(lion,zebre,leopard,singe,antilope,herisson,anteate
 fun menu(){
     println("A :Pour afficher la liste des animaux")
     println("N :Pour ajouter un animal")
+    println("D :Pour suprimer un element")
     println("H :Pour afficher les Herbivores")
     println("C :Pour afficher les Carnivores")
     println("I :Pour afficher les Insectivores")
@@ -96,6 +106,18 @@ fun menu(){
         'A'-> {
             println("Liste des animaux:")
             ZooOperation.showAllAnimaux(listeAnimaux);
+        }
+        'D'->{
+            println("entrer le nom de l'animal à supprimé")
+            var nomAnimal= readLine();
+            while (nomAnimal=="") {
+                print("Entrer un nom: ")
+                nomAnimal = readLine()
+            }
+            if (nomAnimal != null) {
+               println(ZooOperation.removeAnimal(nomAnimal))
+                ZooOperation.showAllAnimaux(listeAnimaux)
+            }
         }
         'N'->{
             print("Nom: ")
@@ -175,13 +197,13 @@ fun menu(){
             println("Tous les animaux")
             ZooOperation.showAllAnimaux(listeAnimaux)
             println("----------------------------")
-            println("Les CARNIVORES")
+            println("categorie CARNIVORES")
             ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.CARNIVORE)
-            println("Les Herbivores")
+            println("categorie Herbivores")
             ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.HERBIVORE)
-            println("Les insectivores")
+            println("categorie insectivores")
             ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.INSECTIVORE)
-            println("Autre categorie")
+            println("categorie Autre ")
             ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.AUTRE)
             println("------------------------------")
             myHyghtOrderFunction(antilope,zebre,isMemeCategorie); //verifie si les deux animaux sont de la meme categorie
