@@ -195,16 +195,16 @@ fun menu(){
         }
         else -> {
             println("Tous les animaux")
-            ZooOperation.showAllAnimaux(listeAnimaux)
+            ZooOperation.showAllAnimaux(listeAnimaux) //affiche tous les animaux avec le nombre de chaque categorie
             println("----------------------------")
             println("categorie CARNIVORES")
-            ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.CARNIVORE)
+            ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.CARNIVORE) //Affiche les animaux de la categorie CARNIVORE
             println("categorie Herbivores")
-            ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.HERBIVORE)
+            ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.HERBIVORE) //Affiche les animaux de la categorie HERBIVORE
             println("categorie insectivores")
-            ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.INSECTIVORE)
+            ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.INSECTIVORE) //Affiche les animaux de la categorie INSECTIVORE
             println("categorie Autre ")
-            ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.AUTRE)
+            ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.AUTRE) //Affiche les animaux de la categorie AUTRE
             println("------------------------------")
             myHyghtOrderFunction(antilope,zebre,isMemeCategorie); //verifie si les deux animaux sont de la meme categorie
             println("------------------------------")
