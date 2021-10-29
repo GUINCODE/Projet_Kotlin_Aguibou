@@ -75,7 +75,8 @@ object ZooOperation{
         }
         else println("aucun element trouvé")
     }
-}
+
+} //end singleton ZooOperation
 
 
 //les fonctions lamda
@@ -83,7 +84,7 @@ val isMemeCategorie={x: Animal, y:Animal ->   if (x.categorie != y.categorie) "[
 else "[TEST CATEGORIE] --> ${x.nom} et ${y.nom} sont tous des ${x.categorie}  " }
 val calclulPoind={x: Animal, y:Animal -> "[CALCUL POIDS] -->  Poids[${x.nom}] + Poids[${y.nom}] => ${x.poids} + ${y.poids} = ${x.poids + y.poids}" }
 
-// HyghtOrderFontion
+// Hyght Order Fontion
 inline fun myHyghtOrderFunction(x: Animal, y: Animal, operation: (Animal, Animal) -> String):  Unit=  println(operation(x,y))
 
 
@@ -233,10 +234,11 @@ fun menu(){
             ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.INSECTIVORE) //Affiche les animaux de la categorie INSECTIVORE
             println("categorie Autre ")
             ZooOperation.showAnimalByCategorie(listeAnimaux,CategorieAnimal.AUTRE) //Affiche les animaux de la categorie AUTRE
+
             println("------------------------------")
-            myHyghtOrderFunction(antilope,zebre,isMemeCategorie) //verifie si les deux animaux sont de la meme categorie
+            myHyghtOrderFunction(antilope,zebre,isMemeCategorie) //avec un Hight order fonction on verifie si les deux animaux passés en parametre sont de la meme categorie
             println("------------------------------")
-           myHyghtOrderFunction(antilope,zebre,calclulPoind) //calcul le poids total des deux animaux
+           myHyghtOrderFunction(antilope,zebre,calclulPoind) //avec un Hight order fonction on calcul le poids total des deux animaux passés en parametres
         }
     }
 }
